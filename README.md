@@ -28,7 +28,7 @@ spark-submit --master "local[*]" --py-files utils --files config.json main.py
 ## Sample Output
 ![image](https://user-images.githubusercontent.com/34810569/207415537-40884a3b-7e0a-4483-a461-b2085a834d73.png)
 
-Along with the ouput displayed on the terminal, the output results are stored in the locations specified in the config.json as well. You can find the sample output folder structure as well as the sample output of terminal in the above screenshot.
+Along with the ouput displayed on the terminal, the output results are stored in the locations specified in the config.json as well. You can find the sample output folders and structure in the repository and the sample output of terminal in the above screenshot.
 
 
 
