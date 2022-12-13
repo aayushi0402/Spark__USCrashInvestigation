@@ -1,5 +1,6 @@
 # Data Analysis on Vehicle Accidents in the US using Apache Spark
 Analysis of US Vehicle Accidents
+The analysis .ipynb file contains the code that was developed initially before packaging it into a Spark Application.
 
 ## Pre-requisites
 1. Verifying Java Installation
@@ -24,6 +25,9 @@ The input file is currently given in the project's input/ folder, this can be ch
 cd Spark__USCrashInvestigation
 spark-submit --master "local[*]" --py-files utils --files config.json main.py
 ```
+Running the above command
+![image](https://user-images.githubusercontent.com/34810569/207420072-e6a3b915-30e2-4ffe-856e-12be764e2c3b.png)
+
 
 ## Sample Output
 ![image](https://user-images.githubusercontent.com/34810569/207415537-40884a3b-7e0a-4483-a461-b2085a834d73.png)
