@@ -24,10 +24,11 @@ The input file is currently given in the project's input/ folder, this can be ch
 cd Spark__USCrashInvestigation
 spark-submit --master "local[*]" --py-files utils --files config.json main.py
 ```
-
-![image](https://user-images.githubusercontent.com/34810569/207413904-04c8b1af-8091-429d-bdbf-8103c11ce661.png)
+Running the above commands- demo:
+![image](https://user-images.githubusercontent.com/34810569/207415621-9a283bf0-d6a8-470f-b4c3-524071fb6896.png)
 
 ## Output
-![image](https://user-images.githubusercontent.com/34810569/207414153-9d352ca3-fa50-44a8-a3e1-b4e00bf75bce.png)
+![image](https://user-images.githubusercontent.com/34810569/207415537-40884a3b-7e0a-4483-a461-b2085a834d73.png)
+
 
 
