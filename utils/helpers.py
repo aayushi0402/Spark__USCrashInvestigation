@@ -2,6 +2,11 @@ from zipfile import ZipFile
 import json
 
 def read_config(config_file):
+  """
+  Reads a json config file and returns the loaded json
+  :param config_file: path to the config file
+  :return: loaded json file content
+  """
   with open(f"{config_file}", "r") as f:
     config_content = json.load(f)
   return config_content
