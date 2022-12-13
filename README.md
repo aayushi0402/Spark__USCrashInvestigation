@@ -1,6 +1,5 @@
 # Data Analysis on Vehicle Accidents in the US using Apache Spark
-Analysis of US Vehicle Accidents
-The analysis .ipynb file contains the code that was developed initially before packaging it into a Spark Application.
+Analysis of US Vehicle Accidents. The analysis .ipynb file contains the code that was developed initially before packaging it into a Spark Application.
 
 ## Pre-requisites
 1. Verifying Java Installation
@@ -19,8 +18,7 @@ Spark Application should perform below analysis and store the results for each a
 8. Analysis 8: Determine the Top 5 Vehicle Makes where drivers are charged with speeding roffences, has licensed Drivers, uses top 10 used vehicle colours and has car licensed with the states with highest number of offences (to be deduced from the data)
 
 ## Running the project
-First you will have to fork/clone this repository
-The input file is currently given in the project's input/ folder, this can be changed in the config.json depending on the input file location.
+First you will have to fork/clone this repository. The input file is currently given in the project's input/ folder, this can be changed in the config.json depending on the input file location.
 ```sh
 cd Spark__USCrashInvestigation
 spark-submit --master "local[*]" --py-files utils --files config.json main.py
