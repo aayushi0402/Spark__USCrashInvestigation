@@ -11,10 +11,10 @@ class USVehicleCrashInvestigation:
         extracted_inputs = helpers.read_config(config_file).get("ExtractedInput")
         self.df_charges_use = helpers.deduplicate_df(helpers.load_csv(spark, extracted_files_path+extracted_inputs.get("Charges")))
         self.df_damages_use = helpers.deduplicate_df(helpers.load_csv(spark, extracted_files_path+extracted_inputs.get("Damages")))
-        self.df_endorse_use = helpers.load_csv(spark, extracted_files_path+extracted_inputs.get("Endorse"))
-        self.df_primary_person_use = helpers.load_csv(spark, extracted_files_path+extracted_inputs.get("PrimaryPerson"))
-        self.df_restrict_use = helpers.load_csv(spark, extracted_files_path+extracted_inputs.get("Restrict"))
-        self.df_units_use = helpers.load_csv(spark, extracted_files_path+extracted_inputs.get("Units"))
+        self.df_endorse_use = helpers.deduplicate_df(helpers.load_csv(spark, extracted_files_path+extracted_inputs.get("Endorse")))
+        self.df_primary_person_use = helpers.deduplicate_df(helpers.load_csv(spark, extracted_files_path+extracted_inputs.get("PrimaryPerson")))
+        self.df_restrict_use = helpers.deduplicate_df(helpers.load_csv(spark, extracted_files_path+extracted_inputs.get("Restrict")))
+        self.df_units_use = helpers.deduplicate_df(helpers.load_csv(spark, extracted_files_path+extracted_inputs.get("Units")))
     
     def analytics_1(self, output_path, output_format):
         """
