@@ -1,6 +1,5 @@
 from utils import helpers
 from pyspark.sql import SparkSession, Window
-from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 
 class USVehicleCrashInvestigation:
@@ -95,7 +94,7 @@ class USVehicleCrashInvestigation:
             drop("row_number", "count")
 
         helpers.write_output_with_format(out_df,output_path, output_format)
-        return out_df.show()
+        return out_df.show(truncate=False)
 
     def analytics_6(self, output_path, output_format):
         """
@@ -110,7 +109,8 @@ class USVehicleCrashInvestigation:
             groupby("DRVR_ZIP").count().orderBy(F.col("count").desc()).limit(5)
 
         helpers.write_output_with_format(out_df,output_path, output_format)
-        return out_df.show()
+        return  ','.join([row[0] for row in out_df.collect()])
+
 
     def analytics_7(self, output_path, output_format):
         """
@@ -122,9 +122,7 @@ class USVehicleCrashInvestigation:
         out_df = self.df_units_use.join(self.df_damages_use, on=['CRASH_ID'], how='inner'). \
                 filter((F.col("DAMAGED_PROPERTY").rlike("NO DAMAGE")) | (F.col("DAMAGED_PROPERTY").rlike("NONE"))). \
                 filter((F.col("VEH_DMAG_SCL_1_ID").rlike("[5-9]")) | (F.col("VEH_DMAG_SCL_2_ID").rlike("[5-9]"))). \
-                filter((F.col("FIN_RESP_TYPE_ID") == "PROOF OF LIABILITY INSURANCE") | 
-                (F.col("FIN_RESP_TYPE_ID") == "INSURANCE BINDER") | 
-                (F.col("FIN_RESP_TYPE_ID") == "LIABILITY INSURANCE POLICY"))
+                filter((F.col("FIN_RESP_TYPE_ID") == "PROOF OF LIABILITY INSURANCE"))
 
         helpers.write_output_with_format(out_df,output_path, output_format)
         return out_df.select("CRASH_ID").distinct().count()
@@ -162,39 +160,39 @@ if __name__ == '__main__':
     config_file = "config.json"
     spark.sparkContext.setLogLevel("ERROR")
 
-    carCrash = USVehicleCrashInvestigation(config_file)
+    accidents = USVehicleCrashInvestigation(config_file)
     #Specify the output location via config.json
     output_files = helpers.read_config(config_file).get("Output")
     #Specify the output format for the files
     output_format = helpers.read_config(config_file).get("OutputFormat")
 
     #Find the number of crashes (accidents) in which number of persons killed are male?
-    print("Analytics 1 - Number of crashes in which Male persons are killed are: ", carCrash.analytics_1(output_files["Analytics 1"], output_format))
+    print("Analytics 1 - Number of crashes in which Male persons are killed are: ", accidents.analytics_1(output_files["Analytics 1"], output_format))
 
     #How many two wheelers are booked for crashes? 
-    print("Analytics 2 - Number of two-wheelers that are booked for crashes are: ", carCrash.analytics_2(output_files["Analytics 2"], output_format))
+    print("Analytics 2 - Number of two-wheelers that are booked for crashes are: ", accidents.analytics_2(output_files["Analytics 2"], output_format))
     
     #Which state has highest number of accidents in which females are involved? 
-    print("Analytics 3 - The State with highest number of accidents in which Females are involved is: ", carCrash.analytics_3(output_files["Analytics 3"], output_format))
+    print("Analytics 3 - The State with highest number of accidents in which Females are involved is: ", accidents.analytics_3(output_files["Analytics 3"], output_format))
     
     #Which are the Top 5th to 15th VEH_MAKE_IDs that contribute to a largest number of injuries including death
-    print("Analytics 4 - Top 5th-15th Vehicle Makes that contribute to largest number of injuries(including death) are: ", carCrash.analytics_4(output_files["Analytics 4"], output_format))
+    print("Analytics 4 - Top 5th-15th Vehicle Makes that contribute to largest number of injuries(including death) are: ", accidents.analytics_4(output_files["Analytics 4"], output_format))
     
-    #For all the body styles involved in crashes, mention the top ethnic user group of each unique body style  
+    #For all the body styles involved in crashes, mention the top ethnic user group of each unique body style  
     print("Analytics 5 - Top ethnic user group for each vehicle body style: ")
-    carCrash.analytics_5(output_files["Analytics 5"], output_format)
+    accidents.analytics_5(output_files["Analytics 5"], output_format)
     
     #Among the crashed cars, what are the Top 5 Zip Codes with highest number crashes with alcohols as the contributing factor to a crash (Use Driver Zip Code)
-    print("Analytics 6 - Top 5 zip codes with highest crashes involving Alcohol as contributing factor are: ")
-    carCrash.analytics_6(output_files["Analytics 6"], output_format)
+    print("Analytics 6 - Top 5 zip codes with highest crashes involving Alcohol as contributing factor are: ", accidents.analytics_6(output_files["Analytics 6"], output_format))
     
     #Count of Distinct Crash IDs where No Damaged Property was observed and Damage Level (VEH_DMAG_SCL~) is above 4 and car avails Insurance
-    print("Analytics 7 - Count of distinct Crash IDs where no property damage was observed and car has insurance is: ", carCrash.analytics_7(output_files["Analytics 7"], output_format))
+    print("Analytics 7 - Count of distinct Crash IDs where no property damage was observed and car has insurance is: ", accidents.analytics_7(output_files["Analytics 7"], output_format))
     
     #Determine the Top 5 Vehicle Makes where drivers are charged with speeding related offences, 
     #has licensed Drivers, uses top 10 used vehicle colours and
     #has car licensed with the Top 25 states with highest number of offences (to be deduced from the data)
-    print("Analytics 8:", carCrash.analytics_8(output_files["Analytics 8"], output_format))
+    print("""Analytics 8 - Top 5 vehicle makes where drivers are charged with speeding, driver has license,
+     uses to 10 vehicle colors and is licensed with the to 25 states with highest nuber of offences are: """, accidents.analytics_8(output_files["Analytics 8"], output_format))
     
     
     spark.stop()
