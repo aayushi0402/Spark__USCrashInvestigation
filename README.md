@@ -28,7 +28,7 @@ Running the above command
 
 
 ## Sample Output
-![image](https://user-images.githubusercontent.com/34810569/207511932-cc3555e6-fcf6-4366-8eb4-ac29590b6427.png)
+![image](https://user-images.githubusercontent.com/34810569/207656212-fc97e596-8839-40e8-b69c-dee52edff7e4.png)
 
 Along with the ouput displayed on the terminal, the output results are stored in the locations specified in the config.json as well. You can find the sample output folders and structure in the repository and the sample output of terminal in the above screenshot.
 
