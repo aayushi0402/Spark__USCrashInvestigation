@@ -151,7 +151,7 @@ class USVehicleCrashInvestigation:
         return out_list
 
 if __name__ == '__main__':
-    # Initialize sparks session
+
     spark = SparkSession \
         .builder \
         .appName("USVehicleCrashInvestigation") \
